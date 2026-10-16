@@ -1,24 +1,232 @@
-<div class="tools" id="toolGrid">
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saniya PDF Tools</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#fff;color:#383838}
+header{height:70px;padding:0 7%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee}
+.logo{font-size:25px;font-weight:bold;color:#e5322d}
+.logo span{color:#333}
+.hero{text-align:center;padding:48px 15px 25px}
+.hero h1{font-size:36px;margin:0 0 14px}
+.hero p{font-size:17px;color:#666;line-height:1.6}
+.tools{max-width:1100px;margin:30px auto;padding:0 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{border:1px solid #eee;border-radius:12px;padding:28px 15px;text-align:center;text-decoration:none;color:#333;box-shadow:0 3px 12px #00000008;transition:.2s}
+.card:hover{box-shadow:0 5px 18px #00000018;transform:translateY(-3px)}
+.icon{font-size:43px;margin-bottom:15px}
+.card h2{font-size:19px;margin:8px 0}
+.card p{font-size:14px;color:#777;line-height:1.5}
+button,.btn{background:#e5322d;color:white;border:0;border-radius:6px;padding:12px 22px;font-size:15px;cursor:pointer;display:inline-block;margin-top:10px}
+.panel{max-width:700px;margin:25px auto;padding:20px;text-align:center;border:1px solid #eee;border-radius:12px}
+.panel h2{margin-top:0}
+input{max-width:100%;margin:15px}
+#result img{max-width:100%;margin-top:15px}
+footer{text-align:center;padding:25px;background:#fafafa;color:#777;margin-top:45px}
+@media(max-width:700px){.tools{grid-template-columns:1fr 1fr}.hero h1{font-size:28px}}
+@media(max-width:430px){.tools{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
 
-<div class="card" data-name="pdf jpg">
-<div class="icon">🖼️</div>
-<h3>PDF से JPG</h3>
-<p>PDF के पेजों को JPG इमेज में बदलें।</p>
-<button onclick="showTool('pdfJpg')">टूल खोलें</button>
-</div>
+<header>
+  <div class="logo">Saniya <span>PDF Tools</span></div>
+</header>
 
-<div class="card" data-name="jpg pdf image">
-<div class="icon">📷</div>
-<h3>JPG से PDF</h3>
-<p>अपनी फोटो को PDF फाइल में बदलें।</p>
-<button onclick="showTool('jpgPdf')">टूल खोलें</button>
-</div>
+<section class="hero">
+  <h1>आपकी सभी PDF जरूरतों का आसान समाधान</h1>
+  <p>PDF और इमेज फाइलों को आसानी से कन्वर्ट करें।<br>
+  मुफ्त और सरल ऑनलाइन टूल।</p>
+</section>
 
-<div class="card" data-name="image resize फोटो आकार">
-<div class="icon">📐</div>
-<h3>Image Resize</h3>
-<p>फोटो का आकार बदलें।</p>
-<button onclick="showTool('resize')">टूल खोलें</button>
-</div>
+<section class="tools">
+  <div class="card">
+    <div class="icon">📄</div>
+    <h2>PDF to JPG</h2>
+    <p>PDF के पेज को JPG इमेज में बदलें।</p>
+    <button onclick="showTool('pdfjpg')">टूल खोलें</button>
+  </div>
 
-</div>
+  <div class="card">
+    <div class="icon">🖼️</div>
+    <h2>JPG to PDF</h2>
+    <p>अपनी इमेज को PDF फाइल में बदलें।</p>
+    <button onclick="showTool('jpgpdf')">टूल खोलें</button>
+  </div>
+
+  <div class="card">
+    <div class="icon">📐</div>
+    <h2>Image Resize</h2>
+    <p>इमेज की चौड़ाई और ऊँचाई बदलें।</p>
+    <button onclick="showTool('resize')">टूल खोलें</button>
+  </div>
+</section>
+
+<section class="panel" id="toolPanel" hidden>
+  <h2 id="toolTitle"></h2>
+  <p id="toolDescription"></p>
+  <input type="file" id="fileInput" accept="image/*,.pdf" multiple>
+  <br>
+  <div id="extra"></div>
+  <button onclick="processFile()">कन्वर्ट करें</button>
+  <div id="result"></div>
+</section>
+
+<footer>
+  © 2026 Saniya PDF Tools | Simple & Easy Online Tools
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+let currentTool = "";
+
+function showTool(tool){
+  currentTool = tool;
+  const panel = document.getElementById("toolPanel");
+  const title = document.getElementById("toolTitle");
+  const desc = document.getElementById("toolDescription");
+  const input = document.getElementById("fileInput");
+  const extra = document.getElementById("extra");
+  document.getElementById("result").innerHTML = "";
+
+  if(tool === "pdfjpg"){
+    title.textContent = "PDF to JPG";
+    desc.textContent = "PDF फाइल चुनें। हर पेज को JPG में डाउनलोड कर सकेंगे।";
+    input.accept = ".pdf,application/pdf";
+    input.multiple = false;
+    extra.innerHTML = "";
+  }else if(tool === "jpgpdf"){
+    title.textContent = "JPG to PDF";
+    desc.textContent = "एक या अधिक इमेज चुनें और PDF बनाएं।";
+    input.accept = "image/*";
+    input.multiple = true;
+    extra.innerHTML = "";
+  }else{
+    title.textContent = "Image Resize";
+    desc.textContent = "इमेज चुनें और उसका नया आकार डालें।";
+    input.accept = "image/*";
+    input.multiple = false;
+    extra.innerHTML = 'चौड़ाई: <input id="newWidth" type="number" value="800" min="1"><br>ऊँचाई: <input id="newHeight" type="number" value="600" min="1"><br>';
+  }
+  panel.hidden = false;
+  panel.scrollIntoView({behavior:"smooth"});
+}
+
+function loadImage(file){
+  return new Promise((resolve,reject)=>{
+    const img = new Image();
+    img.onload = ()=>resolve(img);
+    img.onerror = reject;
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+async function processFile(){
+  const files = document.getElementById("fileInput").files;
+  const result = document.getElementById("result");
+  result.innerHTML = "";
+
+  if(!files.length){
+    alert("पहले फाइल चुनें।");
+    return;
+  }
+
+  try{
+    if(currentTool === "jpgpdf"){
+      const {jsPDF} = window.jspdf;
+      let pdf = null;
+
+      for(const file of files){
+        const img = await loadImage(file);
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        canvas.getContext("2d").drawImage(img,0,0);
+
+        const data = canvas.toDataURL("image/jpeg",0.92);
+        const orientation = img.width > img.height ? "landscape" : "portrait";
+
+        if(!pdf){
+          pdf = new jsPDF({orientation,unit:"px",format:[img.width,img.height]});
+        }else{
+          pdf.addPage([img.width,img.height],orientation);
+        }
+        pdf.addImage(data,"JPEG",0,0,img.width,img.height);
+      }
+      pdf.save("Saniya-Images.pdf");
+      result.textContent = "आपकी PDF डाउनलोड हो गई।";
+    }
+
+    else if(currentTool === "resize"){
+      const img = await loadImage(files[0]);
+      const width = parseInt(document.getElementById("newWidth").value);
+      const height = parseInt(document.getElementById("newHeight").value);
+
+      if(!width || !height || width < 1 || height < 1){
+        alert("सही चौड़ाई और ऊँचाई डालें।");
+        return;
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      canvas.getContext("2d").drawImage(img,0,0,width,height);
+
+      const link = document.createElement("a");
+      link.href = canvas.toDataURL("image/jpeg",0.92);
+      link.download = "Saniya-Resized.jpg";
+      link.textContent = "डाउनलोड इमेज";
+      link.className = "btn";
+      result.appendChild(link);
+      result.appendChild(document.createElement("br"));
+
+      const preview = document.createElement("img");
+      preview.src = link.href;
+      result.appendChild(preview);
+    }
+
+    else if(currentTool === "pdfjpg"){
+      if(!window.pdfjsLib){
+        alert("PDF टूल लोड नहीं हुआ। इंटरनेट चालू करके दोबारा प्रयास करें।");
+        return;
+      }
+
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+      const buffer = await files[0].arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({data:buffer}).promise;
+
+      for(let i=1;i<=pdf.numPages;i++){
+        const page = await pdf.getPage(i);
+        const viewport = page.getViewport({scale:1.5});
+        const canvas = document.createElement("canvas");
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        await page.render({
+          canvasContext:canvas.getContext("2d"),
+          viewport:viewport
+        }).promise;
+
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL("image/jpeg",0.92);
+        link.download = "Saniya-Page-" + i + ".jpg";
+        link.textContent = "पेज " + i + " डाउनलोड करें";
+        link.className = "btn";
+        result.appendChild(link);
+        result.appendChild(document.createElement("br"));
+      }
+    }
+  }catch(error){
+    console.error(error);
+    alert("फाइल प्रोसेस नहीं हुई। दूसरी फाइल चुनकर कोशिश करें।");
+  }
+}
+</script>
+</body>
+</html>
