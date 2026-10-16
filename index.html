@@ -3,140 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pavan PDF Tools</title>
+<title>Saniya PDF Tools - Free PDF to JPG</title>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f0f4ff;
-  text-align: center;
-  padding: 20px;
-}
-.box {
-  max-width: 600px;
-  margin: 40px auto;
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px #ccc;
-}
-h1 { color: #1746a2; }
-button {
-  background: #1746a2;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  margin: 10px;
-  border-radius: 7px;
-  cursor: pointer;
-}
-#output img {
-  width: 100%;
-  max-width: 350px;
-  margin-top: 15px;
-  border: 1px solid #ddd;
-}
-</style>
-</head>
-<body>
-<div class="box">
-<h1>📄 Pavan PDF Tools</h1>
-<h2>PDF to JPG Converter</h2>
-<p>अपनी PDF फाइल चुनें और JPG फोटो में बदलें।</p>
-<input type="file" id="pdfFile" accept="application/pdf,.pdf">
-<br>
-<button onclick="convertPDF()">Convert to JPG</button>
-<button onclick="downloadZip()">Download All ZIP</button>
-<p id="status"></p>
-<div id="output"></div>
-</div>
-
-<script>
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-let images = [];
-
-async function convertPDF() {
-  const file = document.getElementById('pdfFile').files[0];
-  const status = document.getElementById('status');
-  const output = document.getElementById('output');
-
-  if (!file) {
-    alert('पहले PDF फाइल चुनें।');
-    return;
-  }
-
-  images = [];
-  output.innerHTML = '';
-  status.textContent = 'कन्वर्ट हो रहा है...';
-
-  try {
-    const data = await file.arrayBuffer();
-    const pdf = await pdfjsLib.getDocument({data}).promise;
-
-    for (let i = 1; i <= pdf.numPages; i++) {
-      status.textContent = `पेज ${i}/${pdf.numPages} कन्वर्ट हो रहा है...`;
-      const page = await pdf.getPage(i);
-      const viewport = page.getViewport({scale: 2});
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
-
-      await page.render({canvasContext: ctx, viewport}).promise;
-
-      const blob = await new Promise(resolve =>
-        canvas.toBlob(resolve, 'image/jpeg', 0.92)
-      );
-
-      if (!blob) throw new Error('JPG नहीं बन पाया');
-
-      images.push({name: `page-${i}.jpg`, blob});
-
-      const url = URL.createObjectURL(blob);
-      const div = document.createElement('div');
-      const img = document.createElement('img');
-      img.src = url;
-      img.alt = `Page ${i}`;
-
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `page-${i}.jpg`;
-      link.textContent = `पेज ${i} डाउनलोड करें`;
-
-      div.appendChild(img);
-      div.appendChild(document.createElement('br'));
-      div.appendChild(link);
-      output.appendChild(div);
-    }
-
-    status.textContent = 'कन्वर्जन पूरा हुआ! JPG डाउनलोड कर सकते हैं।';
-  } catch (e) {
-    console.error(e);
-    status.textContent = 'PDF कन्वर्ट नहीं हुई। दूसरी PDF आजमाएँ।';
-  }
-}
-
-async function downloadZip() {
-  if (!images.length) {
-    alert('पहले PDF को JPG में कन्वर्ट करें।');
-    return;
-  }
-
-  const zip = new JSZip();
-  images.forEach(img => zip.file(img.name, img.blob));
-
-  const blob = await zip.generateAsync({type: 'blob'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'Pavan-PDF-Images.zip';
-  a.click();
-  URL.revokeObjectURL(url);
-}
-</script>
-</body>
-</html>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#fff;color:#292b35}
+header{padding:18px 7%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eee}
+.logo{font-size:25px;font-weight:bold;color:#e5322d}
+.logo span{color:#333}
+header small{color:#666}
+.hero{text-align:center;padding:55px 18px 35px;background:#fff7f7}
+.hero h1{font-size:38px;margin:0 0 15px;color:#292b35}
+.hero h1 span{color:#e5322d}
+.hero p{font-size:17px;color:#626575;line-height:1.6}
+.container{max-width:850px;margin:30px auto;padding:0 18px}
+.card{border:2px dashed #ef7773;border-radius:18px;padding:35px 20px;text-align:center;background:#fff;box-shadow:0 8px 30px #00000008}
+.icon{font-size:55px;margin-bottom:10px}
+.card h2{margin:8px 0 12px}
+button,.upload-btn{border:0;background:#e5322d;color:white;padding:15px 25px;border-radius:9
