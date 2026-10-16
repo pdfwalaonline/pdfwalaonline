@@ -1,239 +1,797 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PDF Wala - Free PDF & Image Tools</title>
-<meta name="description" content="PDF Wala - Free online PDF and image tools. Convert, resize and compress files easily.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PDF Wala - Image & PDF Tools</title>
+<meta name="description" content="Compress image and PDF files, resize images and convert JPG to PDF with PDF Wala.">
 
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f7f7fb;color:#292b35}
-header{background:white;padding:20px 7%;border-bottom:1px solid #eee}
-.logo{font-size:28px;font-weight:bold;color:#e5322d}
-.logo span{color:#292b35}
-.hero{text-align:center;padding:55px 18px;background:linear-gradient(135deg,#fff0ef,#fff)}
-.hero h1{font-size:36px;margin:0 0 15px}
-.hero p{font-size:16px;color:#666;line-height:1.7}
-.tools{max-width:1100px;margin:35px auto;padding:0 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.card{background:white;border:1px solid #eee;border-radius:14px;padding:25px 18px;text-align:center;box-shadow:0 4px 16px #00000008}
-.card:hover{box-shadow:0 7px 22px #00000015}
-.icon{font-size:43px}
-.card h2{font-size:20px}
-.card p{font-size:14px;color:#777;line-height:1.6;min-height:40px}
-button,.download{border:0;border-radius:7px;padding:12px 20px;background:#e5322d;color:white;font-size:15px;cursor:pointer;text-decoration:none;display:inline-block;margin:6px}
-button:hover,.download:hover{background:#c52420}
-.panel{max-width:720px;margin:25px auto;padding:25px;background:white;border:1px solid #eee;border-radius:14px;text-align:center}
-.panel[hidden]{display:none}
-input{max-width:100%;margin:12px}
-#result{margin-top:20px;overflow-wrap:anywhere}
-#result img{max-width:100%;margin-top:15px}
-footer{text-align:center;padding:25px;background:white;color:#777;margin-top:45px;border-top:1px solid #eee}
-@media(max-width:700px){.tools{grid-template-columns:1fr}.hero h1{font-size:28px}}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f3f4f8;
+  color: #292d3e;
+}
+
+header {
+  background: #4b59a5;
+  color: white;
+  padding: 22px 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 30px;
+  font-weight: bold;
+  letter-spacing: .5px;
+}
+
+.logo span {
+  background: white;
+  color: #4b59a5;
+  padding: 7px;
+  border-radius: 5px;
+  margin-right: 7px;
+}
+
+.menu {
+  font-size: 32px;
+  cursor: pointer;
+}
+
+nav {
+  display: none;
+  background: white;
+  padding: 15px;
+  text-align: center;
+}
+
+nav a {
+  display: inline-block;
+  padding: 10px;
+  color: #4b59a5;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav.open {
+  display: block;
+}
+
+main {
+  max-width: 1000px;
+  margin: 25px auto;
+  padding: 25px;
+  background: white;
+  min-height: 600px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 34px;
+  margin: 12px 0;
+}
+
+.subtitle {
+  font-size: 19px;
+  line-height: 1.5;
+  color: #777;
+  margin: 12px 0 38px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 25px 0;
+}
+
+.tab {
+  background: #eeeeF8;
+  color: #4b59a5;
+  padding: 12px 17px;
+  border-radius: 6px;
+  border: 1px solid #dcdff1;
+}
+
+.tab.active {
+  background: #4b59a5;
+  color: white;
+}
+
+.upload-box {
+  border: 3px dashed #a7a8d5;
+  padding: 55px 15px;
+  margin: 25px auto;
+  max-width: 650px;
+  cursor: pointer;
+  background: #fff;
+}
+
+.upload-box p {
+  font-size: 22px;
+  color: #777;
+}
+
+.select-btn {
+  display: inline-block;
+  background: #087f72;
+  color: white;
+  padding: 16px 25px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+}
+
+#fileInput {
+  display: none;
+}
+
+.settings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 35px;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+input[type="number"], select {
+  font-size: 18px;
+  padding: 12px;
+  border: 1px solid #d6d6df;
+  border-radius: 5px;
+  max-width: 100%;
+}
+
+.primary {
+  background: #4b59a5;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 15px 28px;
+  font-size: 19px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 15px 0;
+}
+
+.primary:hover {
+  background: #37458c;
+}
+
+#status {
+  margin: 20px auto;
+  max-width: 650px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.download {
+  display: inline-block;
+  background: #087f72;
+  color: white;
+  padding: 13px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin: 8px;
+}
+
+.tool-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  max-width: 1000px;
+  margin: 25px auto;
+  padding: 0 20px;
+}
+
+.tool-card {
+  background: white;
+  border: 1px solid #e4e5ee;
+  border-radius: 10px;
+  padding: 25px 15px;
+  text-align: center;
+}
+
+.tool-card h3 {
+  margin-bottom: 8px;
+}
+
+.tool-card p {
+  color: #777;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.tool-card button {
+  background: #4b59a5;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 11px 18px;
+  cursor: pointer;
+}
+
+footer {
+  background: #fff;
+  color: #777;
+  text-align: center;
+  padding: 25px;
+  margin-top: 30px;
+}
+
+@media(max-width:650px) {
+  header {
+    padding: 18px 15px;
+  }
+
+  .logo {
+    font-size: 23px;
+  }
+
+  main {
+    padding: 18px 12px;
+    margin: 12px;
+  }
+
+  h1 {
+    font-size: 27px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .upload-box {
+    padding: 35px 10px;
+  }
+
+  .upload-box p {
+    font-size: 17px;
+  }
+
+  .tool-list {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
 </head>
 
 <body>
+
 <header>
-  <div class="logo">📄 PDF <span>Wala</span></div>
+  <div class="logo"><span>PDF</span> Wala</div>
+  <div class="menu" onclick="toggleMenu()">☰</div>
 </header>
 
-<section class="hero">
-  <h1>आपकी सभी PDF जरूरतों का समाधान!</h1>
-  <p>PDF और Image फाइलों को आसानी से कन्वर्ट और रिसाइज़ करें।<br>सरल ऑनलाइन टूल, एक ही जगह।</p>
+<nav id="navigation">
+  <a href="#" onclick="openTool('image')">Image Compressor</a>
+  <a href="#" onclick="openTool('pdf')">PDF Compressor</a>
+  <a href="#" onclick="openTool('resize')">Image Resize</a>
+  <a href="#" onclick="openTool('jpgpdf')">JPG to PDF</a>
+  <a href="#" onclick="openTool('pdfjpg')">PDF to JPG</a>
+</nav>
+
+<main>
+  <h1 id="heading">Reduce Image Size In KB</h1>
+
+  <p class="subtitle" id="subtitle">
+    Compress an image to 20KB, 50KB, 100KB, 200KB, or any other size.
+  </p>
+
+  <div class="tabs">
+    <button class="tab active" onclick="openTool('image')">Image Compressor</button>
+    <button class="tab" onclick="openTool('pdf')">PDF Compressor</button>
+    <button class="tab" onclick="openTool('resize')">Image Resize</button>
+    <button class="tab" onclick="openTool('jpgpdf')">JPG to PDF</button>
+    <button class="tab" onclick="openTool('pdfjpg')">PDF to JPG</button>
+  </div>
+
+  <div class="upload-box" onclick="document.getElementById('fileInput').click()">
+    <p id="uploadText">Select Or Drag & Drop Images Here</p>
+    <button class="select-btn" type="button">Select Files</button>
+    <p id="fileName" style="font-size:14px"></p>
+  </div>
+
+  <input id="fileInput" type="file" accept="image/*">
+
+  <div class="settings" id="sizeSettings">
+    <label for="targetSize">Target Size:</label>
+    <input id="targetSize" type="number" value="100" min="1" style="width:110px">
+    <select id="unit">
+      <option value="KB">KB</option>
+      <option value="MB">MB</option>
+      <option value="GB">GB</option>
+    </select>
+  </div>
+
+  <div class="settings" id="resizeSettings" style="display:none">
+    <label for="width">Width:</label>
+    <input id="width" type="number" value="800" min="1" style="width:100px">
+    <label for="height">Height:</label>
+    <input id="height" type="number" value="600" min="1" style="width:100px">
+  </div>
+
+  <button class="primary" onclick="processFile()" id="processButton">
+    Reduce Size
+  </button>
+
+  <div id="status" aria-live="polite"></div>
+</main>
+
+<section class="tool-list">
+  <div class="tool-card">
+    <h3>🖼️ Image Compressor</h3>
+    <p>Reduce image file size to your preferred target.</p>
+    <button onclick="openTool('image')">Open Tool</button>
+  </div>
+
+  <div class="tool-card">
+    <h3>📄 PDF Compressor</h3>
+    <p>Reduce PDF size by creating a compressed image-based PDF.</p>
+    <button onclick="openTool('pdf')">Open Tool</button>
+  </div>
+
+  <div class="tool-card">
+    <h3>📐 Image Resize</h3>
+    <p>Change image width and height.</p>
+    <button onclick="openTool('resize')">Open Tool</button>
+  </div>
+
+  <div class="tool-card">
+    <h3>🔄 JPG to PDF</h3>
+    <p>Convert an image into a PDF document.</p>
+    <button onclick="openTool('jpgpdf')">Open Tool</button>
+  </div>
+
+  <div class="tool-card">
+    <h3>📑 PDF to JPG</h3>
+    <p>Convert PDF pages into JPG images.</p>
+    <button onclick="openTool('pdfjpg')">Open Tool</button>
+  </div>
 </section>
 
-<section class="tools">
-  <div class="card">
-    <div class="icon">📄</div>
-    <h2>PDF to JPG</h2>
-    <p>PDF के पेज को JPG इमेज में बदलें।</p>
-    <button onclick="openTool('pdfjpg')">टूल खोलें</button>
-  </div>
-
-  <div class="card">
-    <div class="icon">🖼️</div>
-    <h2>JPG to PDF</h2>
-    <p>फोटो को PDF फाइल में बदलें।</p>
-    <button onclick="openTool('jpgpdf')">टूल खोलें</button>
-  </div>
-
-  <div class="card">
-    <div class="icon">📐</div>
-    <h2>Image Resize</h2>
-    <p>फोटो की चौड़ाई और ऊँचाई बदलें।</p>
-    <button onclick="openTool('resize')">टूल खोलें</button>
-  </div>
-
-  <div class="card">
-    <div class="icon">📦</div>
-    <h2>Image Compressor</h2>
-    <p>फोटो का फाइल साइज़ कम करें।</p>
-    <button onclick="openTool('compress')">टूल खोलें</button>
-  </div>
-</section>
-
-<section class="panel" id="panel" hidden>
-  <h2 id="toolTitle"></h2>
-  <p id="toolDesc"></p>
-  <input id="fileInput" type="file">
-  <div id="extra"></div>
-  <button onclick="processFile()">प्रोसेस करें</button>
-  <div id="result"></div>
-</section>
-
-<footer>© 2026 PDF Wala | Free PDF & Image Tools</footer>
+<footer>
+  © 2026 PDF Wala | Free Image & PDF Tools
+</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
-let activeTool="";
+let activeTool = "image";
+let selectedFile = null;
 
-function openTool(tool){
-  activeTool=tool;
-  const panel=document.getElementById("panel");
-  const input=document.getElementById("fileInput");
-  document.getElementById("result").innerHTML="";
-  document.getElementById("extra").innerHTML="";
-  input.value="";
+const $ = id => document.getElementById(id);
 
-  const settings={
-    pdfjpg:["PDF to JPG","PDF फाइल चुनें।",".pdf,application/pdf",false],
-    jpgpdf:["JPG to PDF","एक या अधिक इमेज चुनें।","image/jpeg,image/png",true],
-    resize:["Image Resize","इमेज चुनें और नया आकार डालें।","image/*",false],
-    compress:["Image Compressor","इमेज चुनें और क्वालिटी चुनें।","image/*",false]
-  };
-
-  const s=settings[tool];
-  document.getElementById("toolTitle").textContent=s[0];
-  document.getElementById("toolDesc").textContent=s[1];
-  input.accept=s[2];
-  input.multiple=s[3];
-
-  if(tool==="resize"){
-    document.getElementById("extra").innerHTML=
-      'चौड़ाई: <input id="w" type="number" value="800" min="1"><br>'+
-      'ऊँचाई: <input id="h" type="number" value="600" min="1"><br>';
-  }
-
-  if(tool==="compress"){
-    document.getElementById("extra").innerHTML=
-      'इमेज क्वालिटी: <select id="quality">'+
-      '<option value="0.8">अच्छी</option>'+
-      '<option value="0.6">मध्यम</option>'+
-      '<option value="0.4">कम साइज़</option></select><br>';
-  }
-
-  panel.hidden=false;
-  panel.scrollIntoView({behavior:"smooth"});
+function toggleMenu() {
+  $("navigation").classList.toggle("open");
 }
 
-function loadImage(file){
-  return new Promise((resolve,reject)=>{
-    const img=new Image();
-    img.onload=()=>resolve(img);
-    img.onerror=reject;
-    img.src=URL.createObjectURL(file);
+function openTool(tool) {
+  activeTool = tool;
+  selectedFile = null;
+  $("fileInput").value = "";
+  $("fileName").textContent = "";
+  $("status").innerHTML = "";
+
+  document.querySelectorAll(".tab").forEach(btn => btn.classList.remove("active"));
+
+  const config = {
+    image: {
+      title: "Reduce Image Size In KB",
+      subtitle: "Compress an image to your desired file size.",
+      upload: "Select Or Drag & Drop Images Here",
+      accept: "image/*",
+      button: "Reduce Size",
+      size: true,
+      resize: false
+    },
+    pdf: {
+      title: "Reduce PDF Size",
+      subtitle: "Reduce PDF file size by converting pages to compressed images.",
+      upload: "Select Your PDF File Here",
+      accept: "application/pdf,.pdf",
+      button: "Compress PDF",
+      size: false,
+      resize: false
+    },
+    resize: {
+      title: "Resize Image",
+      subtitle: "Change image width and height.",
+      upload: "Select An Image To Resize",
+      accept: "image/*",
+      button: "Resize Image",
+      size: false,
+      resize: true
+    },
+    jpgpdf: {
+      title: "JPG To PDF",
+      subtitle: "Convert your image into a PDF document.",
+      upload: "Select An Image",
+      accept: "image/*",
+      button: "Convert To PDF",
+      size: false,
+      resize: false
+    },
+    pdfjpg: {
+      title: "PDF To JPG",
+      subtitle: "Convert PDF pages into JPG images.",
+      upload: "Select A PDF File",
+      accept: "application/pdf,.pdf",
+      button: "Convert To JPG",
+      size: false,
+      resize: false
+    }
+  };
+
+  const c = config[tool];
+
+  $("heading").textContent = c.title;
+  $("subtitle").textContent = c.subtitle;
+  $("uploadText").textContent = c.upload;
+  $("fileInput").accept = c.accept;
+  $("sizeSettings").style.display = c.size ? "flex" : "none";
+  $("resizeSettings").style.display = c.resize ? "flex" : "none";
+  $("processButton").textContent = c.button;
+
+  const index = {image:0,pdf:1,resize:2,jpgpdf:3,pdfjpg:4}[tool];
+  document.querySelectorAll(".tab")[index].classList.add("active");
+
+  $("navigation").classList.remove("open");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+$("fileInput").addEventListener("change", function() {
+  selectedFile = this.files[0];
+  $("fileName").textContent = selectedFile
+    ? selectedFile.name + " (" + formatBytes(selectedFile.size) + ")"
+    : "";
+  $("status").innerHTML = "";
+});
+
+const dropBox = document.querySelector(".upload-box");
+
+dropBox.addEventListener("dragover", e => {
+  e.preventDefault();
+  dropBox.style.background = "#f0f1ff";
+});
+
+dropBox.addEventListener("dragleave", () => {
+  dropBox.style.background = "#fff";
+});
+
+dropBox.addEventListener("drop", e => {
+  e.preventDefault();
+  dropBox.style.background = "#fff";
+
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+
+  const isPDF = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
+
+  if (activeTool === "pdf" || activeTool === "pdfjpg") {
+    if (!isPDF) {
+      alert("Please select a PDF file.");
+      return;
+    }
+  } else if (!file.type.startsWith("image/")) {
+    alert("Please select an image file.");
+    return;
+  }
+
+  selectedFile = file;
+  $("fileInput").value = "";
+  $("fileName").textContent = file.name + " (" + formatBytes(file.size) + ")";
+  $("status").innerHTML = "";
+});
+
+function formatBytes(bytes) {
+  if (bytes < 1024) return bytes + " B";
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+  if (bytes < 1024 ** 3) return (bytes / (1024 ** 2)).toFixed(2) + " MB";
+  return (bytes / (1024 ** 3)).toFixed(3) + " GB";
+}
+
+function targetBytes() {
+  const value = Number($("targetSize").value);
+  const unit = $("unit").value;
+
+  if (!Number.isFinite(value) || value <= 0) return 0;
+
+  const multiplier = unit === "KB" ? 1024 :
+                     unit === "MB" ? 1024 ** 2 : 1024 ** 3;
+
+  return value * multiplier;
+}
+
+function loadImage(file) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      resolve(img);
+    };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Could not read the image."));
+    };
+
+    img.src = url;
   });
 }
 
-async function processFile(){
-  const files=document.getElementById("fileInput").files;
-  const result=document.getElementById("result");
-  result.innerHTML="";
+function canvasBlob(canvas, quality) {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(blob => {
+      if (blob) resolve(blob);
+      else reject(new Error("Image encoding failed."));
+    }, "image/jpeg", quality);
+  });
+}
 
-  if(!files.length){alert("पहले फाइल चुनें।");return;}
+async function compressImage(file, target) {
+  const img = await loadImage(file);
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
 
-  try{
-    if(activeTool==="jpgpdf"){
-      const {jsPDF}=window.jspdf;
-      let pdf=null;
+  let width = img.naturalWidth;
+  let height = img.naturalHeight;
+  const maxDimension = 5000;
 
-      for(const file of files){
-        const img=await loadImage(file);
-        const canvas=document.createElement("canvas");
-        canvas.width=img.width;canvas.height=img.height;
-        canvas.getContext("2d").drawImage(img,0,0);
-        const orient=img.width>img.height?"landscape":"portrait";
+  if (Math.max(width, height) > maxDimension) {
+    const ratio = maxDimension / Math.max(width, height);
+    width = Math.round(width * ratio);
+    height = Math.round(height * ratio);
+  }
 
-        if(!pdf){
-          pdf=new jsPDF({orientation:orient,unit:"px",format:[img.width,img.height]});
-        }else{
-          pdf.addPage([img.width,img.height],orient);
-        }
+  canvas.width = width;
+  canvas.height = height;
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, width, height);
+  ctx.drawImage(img, 0, 0, width, height);
 
-        pdf.addImage(canvas.toDataURL("image/jpeg",0.9),"JPEG",0,0,img.width,img.height);
+  let blob = await canvasBlob(canvas, 0.9);
+
+  for (let i = 0; i < 7 && blob.size > target; i++) {
+    const quality = Math.max(0.1, 0.8 - i * 0.12);
+    blob = await canvasBlob(canvas, quality);
+  }
+
+  for (let i = 0; i < 5 && blob.size > target && width > 80 && height > 80; i++) {
+    width = Math.max(80, Math.round(width * 0.8));
+    height = Math.max(80, Math.round(height * 0.8));
+
+    canvas.width = width;
+    canvas.height = height;
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, width, height);
+    ctx.drawImage(img, 0, 0, width, height);
+
+    blob = await canvasBlob(canvas, 0.65);
+  }
+
+  return blob;
+}
+
+function addDownload(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.className = "download";
+  a.textContent = "Download File";
+  $("status").appendChild(a);
+  return url;
+}
+
+async function processFile() {
+  if (!selectedFile) {
+    alert("Please select a file first.");
+    return;
+  }
+
+  $("status").innerHTML = "Processing your file... Please wait.";
+  $("processButton").disabled = true;
+
+  try {
+    if (activeTool === "image") {
+      const target = targetBytes();
+
+      if (!target) {
+        throw new Error("Enter a valid target size.");
       }
 
-      pdf.save("PDF-Wala.pdf");
-      result.textContent="PDF डाउनलोड हो गई।";
+      const blob = await compressImage(selectedFile, target);
+      $("status").innerHTML = "";
+
+      addDownload(blob, "PDF-Wala-Compressed.jpg");
+
+      const info = document.createElement("p");
+      info.textContent =
+        "Original Size: " + formatBytes(selectedFile.size) +
+        " | New Size: " + formatBytes(blob.size);
+
+      $("status").appendChild(info);
+
+      if (blob.size > target) {
+        const note = document.createElement("p");
+        note.textContent = "The target size could not be reached. Try a larger target size.";
+        $("status").appendChild(note);
+      } else {
+        const note = document.createElement("p");
+        note.textContent = "Compression completed successfully.";
+        $("status").appendChild(note);
+      }
     }
 
-    if(activeTool==="resize"||activeTool==="compress"){
-      const file=files[0];
-      const img=await loadImage(file);
-      const canvas=document.createElement("canvas");
+    else if (activeTool === "resize") {
+      const width = Number($("width").value);
+      const height = Number($("height").value);
 
-      let w=img.width,h=img.height;
-
-      if(activeTool==="resize"){
-        w=Number(document.getElementById("w").value);
-        h=Number(document.getElementById("h").value);
-        if(!w||!h||w<1||h<1){alert("सही चौड़ाई और ऊँचाई डालें।");return;}
+      if (!width || !height || width < 1 || height < 1 ||
+          width > 10000 || height > 10000) {
+        throw new Error("Enter valid dimensions (1 to 10000 pixels).");
       }
 
-      canvas.width=w;canvas.height=h;
-      canvas.getContext("2d").drawImage(img,0,0,w,h);
+      const img = await loadImage(selectedFile);
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
 
-      const quality=activeTool==="compress"
-        ?Number(document.getElementById("quality").value):0.9;
+      canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+      const blob = await canvasBlob(canvas, 0.9);
 
-      const link=document.createElement("a");
-      link.href=canvas.toDataURL("image/jpeg",quality);
-      link.download=activeTool==="compress"?"PDF-Wala-Compressed.jpg":"PDF-Wala-Resized.jpg";
-      link.className="download";
-      link.textContent="इमेज डाउनलोड करें";
-      result.appendChild(link);
-
-      const size=document.createElement("p");
-      size.textContent="नई इमेज का साइज़: लगभग "+Math.round(link.href.length*0.75/1024)+" KB";
-      result.appendChild(size);
+      $("status").innerHTML = "";
+      addDownload(blob, "PDF-Wala-Resized.jpg");
+      const info = document.createElement("p");
+      info.textContent = "New Dimensions: " + width + " × " + height +
+                         " | File Size: " + formatBytes(blob.size);
+      $("status").appendChild(info);
     }
 
-    if(activeTool==="pdfjpg"){
-      if(!window.pdfjsLib){alert("PDF टूल लोड नहीं हुआ। इंटरनेट जाँचें।");return;}
+    else if (activeTool === "jpgpdf") {
+      const img = await loadImage(selectedFile);
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      canvas.getContext("2d").drawImage(img, 0, 0);
 
-      pdfjsLib.GlobalWorkerOptions.workerSrc=
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({
+        orientation: img.width > img.height ? "landscape" : "portrait",
+        unit: "px",
+        format: [img.width, img.height]
+      });
+
+      pdf.addImage(canvas.toDataURL("image/jpeg", 0.9),
+                   "JPEG", 0, 0, img.width, img.height);
+
+      const blob = pdf.output("blob");
+      $("status").innerHTML = "";
+      addDownload(blob, "PDF-Wala.pdf");
+      const info = document.createElement("p");
+      info.textContent = "PDF Size: " + formatBytes(blob.size);
+      $("status").appendChild(info);
+    }
+
+    else if (activeTool === "pdf" || activeTool === "pdfjpg") {
+      if (!window.pdfjsLib) {
+        throw new Error("PDF library failed to load. Check your internet connection.");
+      }
+
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
         "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-      const pdf=await pdfjsLib.getDocument({data:await files[0].arrayBuffer()}).promise;
+      const pdf = await pdfjsLib.getDocument({
+        data: await selectedFile.arrayBuffer()
+      }).promise;
 
-      for(let i=1;i<=pdf.numPages;i++){
-        const page=await pdf.getPage(i);
-        const viewport=page.getViewport({scale:1.5});
-        const canvas=document.createElement("canvas");
-        canvas.width=viewport.width;canvas.height=viewport.height;
+      if (activeTool === "pdfjpg") {
+        $("status").innerHTML = "";
 
-        await page.render({
-          canvasContext:canvas.getContext("2d"),
-          viewport:viewport
-        }).promise;
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const viewport = page.getViewport({ scale: 1.5 });
+          const canvas = document.createElement("canvas");
 
-        const link=document.createElement("a");
-        link.href=canvas.toDataURL("image/jpeg",0.9);
-        link.download="PDF-Wala-Page-"+i+".jpg";
-        link.className="download";
-        link.textContent="पेज "+i+" डाउनलोड करें";
-        result.appendChild(link);
-        result.appendChild(document.createElement("br"));
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+
+          await page.render({
+            canvasContext: canvas.getContext("2d"),
+            viewport: viewport
+          }).promise;
+
+          const blob = await canvasBlob(canvas, 0.9);
+          addDownload(blob, "PDF-Wala-Page-" + i + ".jpg");
+
+          const br = document.createElement("br");
+          $("status").appendChild(br);
+        }
+      }
+
+      else {
+        const { jsPDF } = window.jspdf;
+        let output = null;
+
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const viewport = page.getViewport({ scale: 1.2 });
+          const canvas = document.createElement("canvas");
+
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+
+          await page.render({
+            canvasContext: canvas.getContext("2d"),
+            viewport: viewport
+          }).promise;
+
+          const imgData = canvas.toDataURL("image/jpeg", 0.55);
+          const orientation = viewport.width > viewport.height
+            ? "landscape" : "portrait";
+
+          if (!output) {
+            output = new jsPDF({
+              orientation: orientation,
+              unit: "px",
+              format: [viewport.width, viewport.height],
+              compress: true
+            });
+          } else {
+            output.addPage([viewport.width, viewport.height], orientation);
+          }
+
+          output.addImage(
+            imgData, "JPEG", 0, 0, viewport.width, viewport.height,
+            undefined, "FAST"
+          );
+        }
+
+        const blob = output.output("blob");
+        $("status").innerHTML = "";
+        addDownload(blob, "PDF-Wala-Compressed.pdf");
+
+        const info = document.createElement("p");
+        info.textContent =
+          "Original Size: " + formatBytes(selectedFile.size) +
+          " | New Size: " + formatBytes(blob.size);
+
+        $("status").appendChild(info);
+
+        const note = document.createElement("p");
+        note.textContent =
+          "Note: This compressed PDF contains image-based pages. Selectable text, links, and some document features may not be preserved.";
+        $("status").appendChild(note);
       }
     }
-  }catch(e){
-    console.error(e);
-    alert("फाइल प्रोसेस नहीं हुई। दूसरी फाइल चुनकर कोशिश करें।");
+
+  } catch (error) {
+    console.error(error);
+    $("status").textContent = "Error: " + error.message;
+  } finally {
+    $("processButton").disabled = false;
   }
 }
 </script>
+
 </body>
 </html>
