@@ -1,231 +1,24 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Saniya PDF Tools - Free PDF Tools</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;color:#172554;background:#f8fafc}
-header{background:white;padding:18px 5%;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 2px 12px #0000000c}
-.logo{font-size:24px;font-weight:bold;color:#5b21b6}
-.logo span{color:#e5322d}
-header a{color:#4338ca;text-decoration:none;font-weight:bold}
-.hero{text-align:center;padding:45px 16px 38px;background:linear-gradient(120deg,#dbeafe,#f5f3ff,#fce7f3)}
-.hero h1{font-size:clamp(30px,5vw,48px);margin:0 0 14px}
-.hero h1 span{color:#6d28d9}
-.hero p{font-size:17px;line-height:1.8;color:#475569}
-.badges{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:22px}
-.badges span{background:white;padding:10px 15px;border-radius:25px;font-size:14px}
-section{max-width:1100px;margin:35px auto;padding:0 16px}
-h2{text-align:center;font-size:28px}
-.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px}
-.tool{background:white;border:1px solid #e2e8f0;border-radius:16px;padding:22px 15px;text-align:center;box-shadow:0 5px 18px #00000008}
-.tool .icon{font-size:35px}
-.tool h3{font-size:18px}
-.tool p{font-size:14px;line-height:1.6;color:#64748b;min-height:40px}
-button,.btn{background:#6d28d9;color:white;border:0;border-radius:9px;padding:12px 16px;cursor:pointer;font-weight:bold;font-size:14px}
-button:hover,.btn:hover{background:#4c1d95}
-.tool button{width:100%}
-#converter{display:none;background:white;border:1px solid #e2e8f0;border-radius:16px;padding:24px;text-align:center}
-#file{display:none}
-#status{margin:18px 0;color:#475569;overflow-wrap:anywhere}
-#results{margin-top:16px}
-.result{padding:12px;border:1px solid #e2e8f0;border-radius:9px;margin:10px 0;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
-.result a{color:#6d28d9;font-weight:bold}
-footer{background:#172033;color:white;padding:28px 16px;text-align:center;margin-top:45px}
-footer strong{color:#c4b5fd}
-@media(max-width:500px){header{padding:15px;flex-wrap:wrap}.logo{font-size:21px}.hero{padding-top:35px}}
-</style>
-</head>
-<body>
+<div class="tools" id="toolGrid">
 
-<header>
-  <div class="logo">📄 Saniya <span>PDF Tools</span></div>
-  <a href="#tools">सभी टूल देखें ↓</a>
-</header>
-
-<div class="hero">
-  <h1>Saniya <span>PDF Tools</span></h1>
-  <h2>आपके सभी PDF और इमेज टूल एक ही जगह पर</h2>
-  <p>PDF को JPG में बदलें, JPG से PDF बनाएँ और अपनी फाइलें आसानी से मैनेज करें।</p>
-  <div class="badges">
-    <span>⚡ Fast & Easy</span>
-    <span>🛡️ मुफ्त इस्तेमाल</span>
-    <span>🔒 ब्राउज़र में प्रोसेसिंग</span>
-    <span>📱 Mobile Friendly</span>
-  </div>
+<div class="card" data-name="pdf jpg">
+<div class="icon">🖼️</div>
+<h3>PDF से JPG</h3>
+<p>PDF के पेजों को JPG इमेज में बदलें।</p>
+<button onclick="showTool('pdfJpg')">टूल खोलें</button>
 </div>
 
-<section id="tools">
-<h2>✨ आसान और मुफ्त PDF टूल्स</h2>
-<div class="tools">
+<div class="card" data-name="jpg pdf image">
+<div class="icon">📷</div>
+<h3>JPG से PDF</h3>
+<p>अपनी फोटो को PDF फाइल में बदलें।</p>
+<button onclick="showTool('jpgPdf')">टूल खोलें</button>
+</div>
 
-<div class="tool"><div class="icon">🖼️</div><h3>PDF से JPG</h3><p>PDF के हर पेज को JPG इमेज में बदलें।</p><button onclick="openTool('pdfjpg')">अभी उपयोग करें</button></div>
-
-<div class="tool"><div class="icon">📷</div><h3>JPG से PDF</h3><p>अपनी इमेज को PDF फाइल में बदलें।</p><button onclick="openTool('jpgpdf')">अभी उपयोग करें</button></div>
-
-<div class="tool"><div class="icon">📚</div><h3>PDF Merge करें</h3><p>कई PDF फाइलों को एक साथ जोड़ें।</p><button onclick="coming('PDF Merge')">अभी उपयोग करें</button></div>
-
-<div class="tool"><div class="icon">✂️</div><h3>PDF Split करें</h3><p>PDF के पेज अलग-अलग करें।</p><button onclick="coming('PDF Split')">अभी उपयोग करें</button></div>
-
-<div class="tool"><div class="icon">📦</div><h3>PDF Compress करें</h3><p>PDF का साइज़ कम करने में मदद करें।</p><button onclick="coming('PDF Compress')">अभी उपयोग करें</button></div>
-
-<div class="tool"><div class="icon">🔄</div><h3>PDF Rotate करें</h3><p>PDF पेज को घुमाएँ।</p><button onclick="coming('PDF Rotate')">अभी उपयोग करें</button></div>
-
-<div class="tool"><div class="icon">🔓</div><h3>PDF Unlock करें</h3><p>अनुमति वाली PDF की सुरक्षा हटाएँ।</p><button onclick="coming('PDF Unlock')">अभी उपयोग करें</button></div>
-
-<div class="tool"><div class="icon">🔒</div><h3>PDF Lock करें</h3><p>PDF में पासवर्ड सुरक्षा जोड़ें।</p><button onclick="coming('PDF Lock')">अभी उपयोग करें</button></div>
-
-<div class="tool"><div class="icon">📐</div><h3>Image Resize</h3><p>इमेज का आकार बदलें।</p><button onclick="coming('Image Resize')">अभी उपयोग करें</button></div>
-
-<div class="tool"><div class="icon">📝</div><h3>PDF से Text निकालें</h3><p>PDF के टेक्स्ट को कॉपी करने में मदद करें।</p><button onclick="coming('PDF से Text')">अभी उपयोग करें</button></div>
+<div class="card" data-name="image resize फोटो आकार">
+<div class="icon">📐</div>
+<h3>Image Resize</h3>
+<p>फोटो का आकार बदलें।</p>
+<button onclick="showTool('resize')">टूल खोलें</button>
+</div>
 
 </div>
-</section>
-
-<section id="converter">
-<h2 id="toolTitle">PDF टूल</h2>
-<p id="toolDescription">अपनी फाइल चुनें।</p>
-<label class="btn" for="file">📁 फाइल चुनें</label>
-<input id="file" type="file" accept="application/pdf,.pdf">
-<div id="status">अभी कोई फाइल नहीं चुनी गई है।</div>
-<div id="results"></div>
-<button id="zipBtn" style="display:none">सभी JPG ZIP में डाउनलोड करें</button>
-</section>
-
-<footer>
-  <strong>📄 Saniya PDF Tools</strong>
-  <p>सभी के लिए आसान और मुफ्त PDF टूल्स ❤️</p>
-  <small>© 2026 Saniya PDF Tools</small>
-</footer>
-
-<script>
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-const fileInput=document.getElementById('file');
-const statusBox=document.getElementById('status');
-const results=document.getElementById('results');
-const converter=document.getElementById('converter');
-const zipBtn=document.getElementById('zipBtn');
-let activeTool='pdfjpg';
-let zip=null;
-let busy=false;
-
-function openTool(tool){
- activeTool=tool;
- converter.style.display='block';
- results.replaceChildren();
- zipBtn.style.display='none';
- fileInput.value='';
- if(tool==='pdfjpg'){
-  document.getElementById('toolTitle').textContent='PDF से JPG Converter';
-  document.getElementById('toolDescription').textContent='PDF चुनें और उसके पेज JPG में डाउनलोड करें।';
-  fileInput.accept='application/pdf,.pdf';
-  statusBox.textContent='अपनी PDF फाइल चुनें।';
- }else{
-  document.getElementById('toolTitle').textContent='JPG से PDF Converter';
-  document.getElementById('toolDescription').textContent='एक या अधिक JPG/PNG इमेज चुनकर PDF बनाएँ।';
-  fileInput.accept='image/jpeg,image/png,.jpg,.jpeg,.png';
-  fileInput.multiple=true;
-  statusBox.textContent='अपनी इमेज चुनें।';
- }
- converter.scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-function coming(name){
- alert(name+' टूल अभी तैयार किया जा रहा है। फिलहाल PDF से JPG और JPG से PDF का इस्तेमाल कर सकते हैं।');
-}
-
-fileInput.addEventListener('change',async()=>{
- if(busy)return;
- const files=Array.from(fileInput.files||[]);
- if(!files.length)return;
- busy=true;
- results.replaceChildren();
- zipBtn.style.display='none';
- try{
-  if(activeTool==='jpgpdf'){
-   statusBox.textContent='PDF बनाई जा रही है...';
-   const {jsPDF}=window.jspdf;
-   const doc=new jsPDF();
-   for(let i=0;i<files.length;i++){
-    const file=files[i];
-    if(!/^image\/(jpeg|png)$/.test(file.type))continue;
-    const data=await new Promise((resolve,reject)=>{
-     const reader=new FileReader();
-     reader.onload=()=>resolve(reader.result);
-     reader.onerror=reject;
-     reader.readAsDataURL(file);
-    });
-    const image=new Image();
-    await new Promise((resolve,reject)=>{
-     image.onload=resolve;image.onerror=reject;image.src=data;
-    });
-    const width=doc.internal.pageSize.getWidth();
-    const height=doc.internal.pageSize.getHeight();
-    const scale=Math.min(width/image.width,height/image.height);
-    const w=image.width*scale,h=image.height*scale;
-    if(i>0)doc.addPage();
-    doc.addImage(data,file.type==='image/png'?'PNG':'JPEG',(width-w)/2,(height-h)/2,w,h);
-   }
-   const blob=doc.output('blob');
-   const url=URL.createObjectURL(blob);
-   const link=document.createElement('a');
-   link.href=url;link.download='Saniya-Images.pdf';link.textContent='PDF डाउनलोड करें';
-   const row=document.createElement('div');row.className='result';row.append('आपकी PDF तैयार है।',link);results.append(row);
-   statusBox.textContent='हो गया!';
-  }else{
-   const pdfFile=files[0];
-   if(pdfFile.type!=='application/pdf'&&!pdfFile.name.toLowerCase().endsWith('.pdf')){
-    throw new Error('कृपया PDF फाइल चुनें।');
-   }
-   statusBox.textContent='PDF लोड हो रही है...';
-   const pdf=await pdfjsLib.getDocument({data:await pdfFile.arrayBuffer()}).promise;
-   zip=new JSZip();
-   for(let i=1;i<=pdf.numPages;i++){
-    statusBox.textContent='पेज '+i+' / '+pdf.numPages+' कन्वर्ट हो रहा है...';
-    const page=await pdf.getPage(i);
-    const viewport=page.getViewport({scale:1.5});
-    const canvas=document.createElement('canvas');
-    canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);
-    await page.render({canvasContext:canvas.getContext('2d'),viewport}).promise;
-    const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',0.9));
-    if(!blob)throw new Error('JPG नहीं बन पाई।');
-    const name='page-'+i+'.jpg';zip.file(name,blob);
-    const url=URL.createObjectURL(blob);
-    const row=document.createElement('div');row.className='result';
-    const label=document.createElement('span');label.textContent='पेज '+i;
-    const link=document.createElement('a');link.href=url;link.download=name;link.textContent='JPG डाउनलोड करें';
-    row.append(label,link);results.append(row);
-    canvas.width=0;canvas.height=0;
-   }
-   statusBox.textContent='हो गया! '+pdf.numPages+' पेज JPG में बदल गए।';
-   zipBtn.style.display='inline-block';
-  }
- }catch(error){
-  console.error(error);
-  statusBox.textContent='समस्या हुई: '+(error.message||'दूसरी फाइल आजमाएँ।');
- }finally{busy=false;}
-});
-
-zipBtn.addEventListener('click',async()=>{
- if(!zip)return;
- zipBtn.disabled=true;zipBtn.textContent='ZIP बन रही है...';
- try{
-  const blob=await zip.generateAsync({type:'blob'});
-  const url=URL.createObjectURL(blob);
-  const link=document.createElement('a');
-  link.href=url;link.download='Saniya-PDF-Images.zip';link.click();
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
- }catch(error){statusBox.textContent='ZIP डाउनलोड नहीं हो पाई।';}
- finally{zipBtn.disabled=false;zipBtn.textContent='सभी JPG ZIP में डाउनलोड करें';}
-});
-</script>
-</body>
-</html>
